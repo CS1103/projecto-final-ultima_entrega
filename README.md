@@ -29,7 +29,7 @@
   * Alumno A – 209900001 (Responsable de investigación teórica)
   * Alumno B – 209900002 (Desarrollo de la arquitectura)
   * Alumno C – 209900003 (Implementación del modelo)
-  * Alumno D – 209900004 (Pruebas y benchmarking)
+  * Requelmy Limaco Porras – 202410015 (Pruebas y benchmarking)
   * Leonardo Martinez Aquino – 202410148 (Documentación y demo)
 
 > *Nota: Reemplazar nombres y roles reales.*
@@ -60,13 +60,39 @@
 
 ### 1. Investigación teórica
 
-* **Objetivo**: Explorar los fundamentos de las redes neuronales artificiales y su aplicación en agentes inteligentes.
-* **Contenido de ejemplo**:
+**Objetivo**: Explorar los fundamentos de las redes neuronales artificiales y su aplicación en agentes inteligentes.
 
-  1. Historia y evolución de las NNs:
- 
-  2. Principales arquitecturas: MLP, CNN, RNN.
-  3. Algoritmos de entrenamiento: backpropagation, optimizadores.
+#### 1. Historia y evolución de las NNs
+
+- **1943 – 1960** : McCulloch y Pitts proponen la primera neurona binaria. Rosenblatt crea el Perceptrón (1958), pero sus limitaciones (no resuelve XOR) y se produce la falta de potencia computacional.
+- **1980** : Renace el interés con el algoritmo de retropropagación (Rumelhart, 1986), que permite entrenar redes multicapa.
+- **1990 – 2000** : Aparecen redes más complejas como las CNN (LeCun) para visión, y las LSTM (1997) para secuencias. Hinton introduce el preentrenamiento profundo, una tecnica dentro del deep learning (2006).
+- **2010 – hoy** : Auge del deep learning gracias al uso de GPUs. Surgen redes neuronales mejoradas como AlexNet (2012), GANs (2014), y Transformers (2017), que dieron origen a modelos como *GPT*, *BERT* y *ChatGPT*.
+
+#### 2. Principales arquitecturas
+
+- **MLP (Perceptrón Multicapa)**:  
+  Redes feedforward totalmente conectadas. Utilizan funciones de activación como sigmoide o ReLU. Se emplean en tareas de clasificación y regresión general.
+
+- **CNN (Redes Convolucionales)**:  
+  Usadas en visión por computador. Aplican filtros para detectar patrones visuales y reducen la dimensionalidad. Ideales para imágenes y video.
+
+- **RNN (Redes Recurrentes)**:  
+  Procesan datos secuenciales (texto, audio, etc). Mantienen un estado interno para tener memoria. Algunas variantes populares son: LSTM, GRU.
+
+#### 3. Algoritmos de entrenamiento
+
+- **Retropropagación (Backpropagation)**:  
+  Ajusta los pesos propagando el error desde la salida hacia las capas anteriores usando la regla de la cadena. Calcula el gradiente y actualiza pesos.
+
+- **Funciones de pérdida**:
+  - Regresión: Error Cuadrático Medio (MSE).
+  - Clasificación: Entropía Cruzada (Cross-Entropy).
+
+- **Optimizadores**:
+  - SGD (Stochastic Gradient Descent): Actualiza pesos en minilotes, acelerando el entrenamiento.
+  - Adam: Combina tasas de aprendizaje adaptativas con momentos. Muy eficiente y popular.
+  - Otros: RMSprop, Adagrad, Adadelta, etc.
 
 ---
 
@@ -154,7 +180,7 @@
 | Tarea                     | Miembro  | Rol                       |
 | ------------------------- | -------- | ------------------------- |
 | Investigación teórica     | Requelmy Limaco Porras (202410015) | Documentar bases teóricas |
-| Diseño de la arquitectura | Alumno B | UML y esquemas de clases  |
+| Diseño de la arquitectura | Leonardo Martinez Aquino (202410148) | UML y esquemas de clases  |
 | Implementación del modelo | Alumno C | Código C++ de la NN       |
 | Pruebas y benchmarking    | Alumno D | Generación de métricas    |
 | Documentación y demo      | Alumno E | Tutorial y video demo     |
@@ -175,6 +201,12 @@
 ### 7. Bibliografía
 
 > *Actualizar con bibliografia utilizada, al menos 4 referencias bibliograficas y usando formato IEEE de referencias bibliograficas.*
+> 
+[1] I. Goodfellow, Y. Bengio y A. Courville, *Deep Learning*, Cambridge, MA: MIT Press, 2016. [Online]. Disponible: https://www.deeplearningbook.org
+
+[2] D. E. Rumelhart, G. E. Hinton y R. J. Williams, “Learning representations by back-propagating errors,” *Nature*, vol. 323, pp. 533–536, 1986. [Online]. Disponible: https://www.nature.com/articles/323533a0
+
+[6] D. P. Kingma y J. Ba, “Adam: A method for stochastic optimization,” en *Proceedings of the 3rd International Conference on Learning Representations (ICLR)*, 2015. [Online]. Disponible: https://arxiv.org/abs/1412.6980
 
 ---
 
