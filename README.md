@@ -30,7 +30,7 @@
   * Alumno B – 209900002 (Desarrollo de la arquitectura)
   * Alumno C – 209900003 (Implementación del modelo)
   * Alumno D – 209900004 (Pruebas y benchmarking)
-  * Alumno E – 209900005 (Documentación y demo)
+  * Leonardo Martinez Aquino – 202410148 (Documentación y demo)
 
 > *Nota: Reemplazar nombres y roles reales.*
 
