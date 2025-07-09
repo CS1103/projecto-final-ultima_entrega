@@ -38,7 +38,7 @@
 
 ### Requisitos e instalación
 
-1. **Compilador**: GCC 11 o superior
+1. **Compilador**: GCC 11 o superior (soporte completo para C++20 o superior)
 2. **Dependencias**:
 
    * CMake 3.18+
@@ -47,8 +47,8 @@
 3. **Instalación**:
 
    ```bash
-   git clone https://github.com/EJEMPLO/proyecto-final.git
-   cd proyecto-final
+   git clone https://github.com/usuario/proyecto-pong-nn.git
+   cd proyecto-pong-nn
    mkdir build && cd build
    cmake ..
    make
@@ -77,13 +77,33 @@
 * **Estructura de carpetas (ejemplo)**:
 
   ```
-  proyecto-final/
-  ├── src/
-  │   ├── layers/
-  │   ├── optimizers/
-  │   └── main.cpp
-  ├── tests/
-  └── docs/
+  pong_ai/
+  ├── include/
+  │   └── utec/
+  │       ├── algebra/               
+  │       │   └── Tensor.h
+  │       ├── nn/                    
+  │       │   ├── layer.h
+  │       │   ├── dense.h
+  │       │   ├── activation.h
+  │       │   ├── loss.h
+  │       │   └── neural_network.h
+  │       └── agent/                 
+  │           ├── PongAgent.h
+  │           └── EnvGym.h
+  ├── src/                           
+  │   └── utec/
+  │       └── agent/
+  │           ├── PongAgent.cpp
+  │           └── EnvGym.cpp
+  ├── tests/                         
+  │   ├── test_tensor.cpp
+  │   ├── test_neural_network.cpp
+  │   └── test_agent_env.cpp
+  ├── docs/                          
+  ├── README.md
+  └── BIBLIOGRAFIA.md
+
   ```
 
 #### 2.2 Manual de uso y casos de prueba
