@@ -153,7 +153,7 @@
 
 | Tarea                     | Miembro  | Rol                       |
 | ------------------------- | -------- | ------------------------- |
-| Investigación teórica     | Alumno A | Documentar bases teóricas |
+| Investigación teórica     | Requelmy Limaco Porras (202410015) | Documentar bases teóricas |
 | Diseño de la arquitectura | Alumno B | UML y esquemas de clases  |
 | Implementación del modelo | Alumno C | Código C++ de la NN       |
 | Pruebas y benchmarking    | Alumno D | Generación de métricas    |
