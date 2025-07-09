@@ -60,10 +60,11 @@
 
 ### 1. Investigación teórica
 
-* **Objetivo**: Explorar fundamentos y arquitecturas de redes neuronales.
+* **Objetivo**: Explorar los fundamentos de las redes neuronales artificiales y su aplicación en agentes inteligentes.
 * **Contenido de ejemplo**:
 
-  1. Historia y evolución de las NNs.
+  1. Historia y evolución de las NNs:
+ 
   2. Principales arquitecturas: MLP, CNN, RNN.
   3. Algoritmos de entrenamiento: backpropagation, optimizadores.
 
