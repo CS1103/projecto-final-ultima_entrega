@@ -247,6 +247,10 @@ make
 
 [3] D. P. Kingma y J. Ba, “Adam: A method for stochastic optimization,” en *Proceedings of the 3rd International Conference on Learning Representations (ICLR)*, 2015. [Online]. Disponible: https://arxiv.org/abs/1412.6980
 
+[4] S. Hochreiter y J. Schmidhuber, “Long short-term memory,” Neural Computation, vol. 9, no. 8, pp. 1735–1780, 1997. [En línea]. Disponible en: https://www.bioinf.jku.at/publications/older/2604.pdf
+
+[5] A. Vaswani et al., “Attention is all you need,” en Advances in Neural Information Processing Systems, vol. 30, 2017. [En línea]. Disponible en: https://papers.nips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf
+
 ---
 
 ### Licencia
