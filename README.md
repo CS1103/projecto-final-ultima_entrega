@@ -35,24 +35,18 @@ Implementación en C++ de un agente para el juego Pong que utiliza una red neuro
 
 ### Requisitos e instalación
 
-1. **Compilador**: GCC 11 o superior (soporte completo para C++20 o superior)
+1. **Compilador**: GCC 11 o superior (con soporte para C++20)
 2. **Dependencias**:
-
-   * CMake 3.18+
-   * Eigen 3.4
-   * \[Otra librería opcional]
+   * Ninguna (solo STL)
 3. **Instalación**:
 
-   ```bash
-   git clone https://github.com/usuario/proyecto-pong-nn.git
-   cd proyecto-pong-nn
-   mkdir build && cd build
-   cmake ..
-   make
-   ```
-
-> *Ejemplo de repositorio y comandos, ajustar según proyecto.*
-
+```bash
+git clone https://github.com/CS1103/projecto-final-ultima_entrega
+cd 
+mkdir build && cd build
+cmake ..
+make
+```
 ---
 
 ### 1. Investigación teórica
