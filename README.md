@@ -137,16 +137,34 @@ Implementación en C++ de un agente para el juego Pong que utiliza una red neuro
 
   ```
 
-#### 2.2 Manual de uso y casos de prueba
+## 2.2 Manual de uso y casos de prueba
 
-* **Cómo ejecutar**: `./build/neural_net_demo input.csv output.csv`
-* **Casos de prueba**:
+### Cómo ejecutar
 
-  * Test unitario de capa densa.
-  * Test de función de activación ReLU.
-  * Test de convergencia en dataset de ejemplo.
+El programa se compila y ejecuta desde CLion o por línea de comandos. No requiere archivos de entrada.
 
-> *Personalizar rutas, comandos y casos reales.*
+```bash
+./EP2321
+```
+### Casos de prueba
+**Test unitario de capa densa (Dense)**
+* Se comprueba su funcionamiento correcto durante el entrenamiento del XOR.
+
+* El forward realiza una multiplicación matricial y suma el bias.
+
+* El backward propaga correctamente el gradiente hacia atrás y calcula dW y db.
+
+**Test de función de activación ReLU**
+* Aplicada tras la primera capa Dense.
+
+* Corrige los valores negativos a cero y permite el paso de valores positivos.
+
+Se valida con propagación hacia adelante y hacia atrás (forward y backward).
+
+**Test de convergencia en dataset XOR**
+* El modelo se entrena con 4 entradas representando el XOR lógico.
+
+* Debido a errores en la ejecución o configuración, no se obtuvo convergencia completa en esta versión.
 
 ---
 
