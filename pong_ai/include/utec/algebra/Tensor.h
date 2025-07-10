@@ -1,8 +1,11 @@
+#pragma once
 #include <iostream>
 #include <exception>
 #include <initializer_list>
 #include <numeric>
 #include <utility>
+#include <functional>
+#include <algorithm>
 
 namespace utec {
 namespace algebra {
@@ -17,15 +20,20 @@ public:
 template <typename T, unsigned long N>
 class Tensor {
 public:
+
+    Tensor() {
+        for (unsigned long i = 0; i < N; ++i)
+            dimensiones[i] = 0;
+        datos = nullptr;
+        capacidad = 0;
+    }
+
     template <typename... Args>
     Tensor(Args... dims) {
         constexpr unsigned long num = sizeof...(Args);
         if (num != N) {
-            if (N == 1) throw TensorError("Number of dimensions do not match with 1");
-            if (N == 2) throw TensorError("Number of dimensions do not match with 2");
-            if (N == 3) throw TensorError("Number of dimensions do not match with 3");
-            if (N == 4) throw TensorError("Number of dimensions do not match with 4");
-            throw TensorError("Number of dimensions do not match with");
+            std::cerr << "[ERROR] Constructor: esperado N=" << N << ", recibido=" << num << "\n";
+            throw TensorError("Number of dimensions do not match");
         }
         unsigned long vals[num] = { static_cast<unsigned long>(dims)... };
         unsigned long total = 1;
@@ -35,6 +43,18 @@ public:
         }
         datos = new T[total];
         capacidad = total;
+        for (unsigned long i = 0; i < total; ++i) {
+            datos[i] = T();
+        }
+    }
+
+    void print_shape(const std::string& nombre = "Tensor") const {
+        std::cout << nombre << " shape: (";
+        for (unsigned long i = 0; i < N; ++i) {
+            std::cout << dimensiones[i];
+            if (i + 1 < N) std::cout << ", ";
+        }
+        std::cout << ")\n";
     }
 
     Tensor(const Tensor& other) {
@@ -110,11 +130,8 @@ public:
     void reshape(Args... dims) {
         constexpr unsigned long num = sizeof...(Args);
         if (num != N) {
-            if (N == 1) throw TensorError("Number of dimensions do not match with 1");
-            if (N == 2) throw TensorError("Number of dimensions do not match with 2");
-            if (N == 3) throw TensorError("Number of dimensions do not match with 3");
-            if (N == 4) throw TensorError("Number of dimensions do not match with 4");
-            throw TensorError("Number of dimensions do not match with");
+            std::cerr << "[ERROR] reshape(): esperado N=" << N << ", recibido=" << num << "\n";
+            throw TensorError("Number of dimensions do not match");
         }
         unsigned long nuevos[num] = { static_cast<unsigned long>(dims)... };
         unsigned long nuevo_total = 1;
@@ -138,12 +155,10 @@ public:
     template <typename... Args>
     T& operator()(Args... idxs) {
         constexpr unsigned long num = sizeof...(Args);
+        if (datos == nullptr)
+            throw TensorError("Tensor not initialized (nullptr)");
         if (num != N) {
-            if (N == 1) throw TensorError("Number of dimensions do not match with 1");
-            if (N == 2) throw TensorError("Number of dimensions do not match with 2");
-            if (N == 3) throw TensorError("Number of dimensions do not match with 3");
-            if (N == 4) throw TensorError("Number of dimensions do not match with 4");
-            throw TensorError("Number of dimensions do not match with");
+            throw TensorError("Number of dimensions do not match");
         }
         unsigned long indices[num] = { static_cast<unsigned long>(idxs)... };
         unsigned long lin = 0;
@@ -160,11 +175,7 @@ public:
     const T& operator()(Args... idxs) const {
         constexpr unsigned long num = sizeof...(Args);
         if (num != N) {
-            if (N == 1) throw TensorError("Number of dimensions do not match with 1");
-            if (N == 2) throw TensorError("Number of dimensions do not match with 2");
-            if (N == 3) throw TensorError("Number of dimensions do not match with 3");
-            if (N == 4) throw TensorError("Number of dimensions do not match with 4");
-            throw TensorError("Number of dimensions do not match with");
+            throw TensorError("Number of dimensions do not match");
         }
         unsigned long indices[num] = { static_cast<unsigned long>(idxs)... };
         unsigned long lin = 0;
@@ -225,87 +236,34 @@ public:
         return r;
     }
 
-    static Tensor<T, N> broadcast_op(
-        const Tensor<T, N>& a,
-        const Tensor<T, N>& b,
-        const char* err_msg,
-        T (*op)(const T&, const T&)
-    ) {
-        unsigned long result_dims[N];
-        for (unsigned long i = 0; i < N; ++i) {
-            if (a.dimensiones[i] == b.dimensiones[i]) {
-                result_dims[i] = a.dimensiones[i];
-            } else if (a.dimensiones[i] == 1) {
-                result_dims[i] = b.dimensiones[i];
-            } else if (b.dimensiones[i] == 1) {
-                result_dims[i] = a.dimensiones[i];
-            } else {
-                throw TensorError(err_msg);
-            }
-        }
-        Tensor<T, N> result = [&]() {
-            if constexpr (N == 2) {
-                return Tensor<T,2>(result_dims[0], result_dims[1]);
-            } else if constexpr (N == 3) {
-                return Tensor<T,3>(result_dims[0], result_dims[1], result_dims[2]);
-            } else { // N == 4
-                return Tensor<T,4>(
-                    result_dims[0],
-                    result_dims[1],
-                    result_dims[2],
-                    result_dims[3]
-                );
-            }
-        }();
-        unsigned long total = result.tamano_total();
-
-        unsigned long a_strides[N], b_strides[N], r_strides[N];
-        a.calcular_strides(a.dimensiones, a_strides);
-        b.calcular_strides(b.dimensiones, b_strides);
-        result.calcular_strides(result.dimensiones, r_strides);
-
-        for (unsigned long lin = 0; lin < total; ++lin) {
-            unsigned long rem = lin;
-            unsigned long idx_r[N];
-            for (unsigned long d = 0; d < N; ++d) {
-                idx_r[d] = rem / r_strides[d];
-                rem %= r_strides[d];
-            }
-            unsigned long idx_a[N], idx_b[N];
-            for (unsigned long d = 0; d < N; ++d) {
-                idx_a[d] = (a.dimensiones[d] == 1 ? 0 : idx_r[d]);
-                idx_b[d] = (b.dimensiones[d] == 1 ? 0 : idx_r[d]);
-            }
-            unsigned long lin_a = 0, lin_b = 0;
-            for (unsigned long d = 0; d < N; ++d) {
-                lin_a += idx_a[d] * a_strides[d];
-                lin_b += idx_b[d] * b_strides[d];
-            }
-            result.datos[lin] = op(a.datos[lin_a], b.datos[lin_b]);
-        }
-        return result;
-    }
-
     friend Tensor<T, N> operator+(const Tensor<T, N>& a, const Tensor<T, N>& b) {
-        return broadcast_op(
-            a, b,
-            "Shapes do not match and they are not compatible for broadcasting",
-            [](const T& x, const T& y){ return x + y; }
-        );
+        if (a.tamano_total() != b.tamano_total())
+            throw TensorError("Tensor sizes do not match for element-wise operation");
+        Tensor<T, N> r = a;
+        unsigned long total = a.tamano_total();
+        for (unsigned long i = 0; i < total; ++i)
+            r.datos[i] = a.datos[i] + b.datos[i];
+        return r;
     }
+
     friend Tensor<T, N> operator-(const Tensor<T, N>& a, const Tensor<T, N>& b) {
-        return broadcast_op(
-            a, b,
-            "Shapes do not match and they are not compatible for broadcasting",
-            [](const T& x, const T& y){ return x - y; }
-        );
+        if (a.tamano_total() != b.tamano_total())
+            throw TensorError("Tensor sizes do not match for element-wise operation");
+        Tensor<T, N> r = a;
+        unsigned long total = a.tamano_total();
+        for (unsigned long i = 0; i < total; ++i)
+            r.datos[i] = a.datos[i] - b.datos[i];
+        return r;
     }
+
     friend Tensor<T, N> operator*(const Tensor<T, N>& a, const Tensor<T, N>& b) {
-        return broadcast_op(
-            a, b,
-            "Shapes do not match and they are not compatible for broadcasting",
-            [](const T& x, const T& y){ return x * y; }
-        );
+        if (a.tamano_total() != b.tamano_total())
+            throw TensorError("Tensor sizes do not match for element-wise operation");
+        Tensor<T, N> r = a;
+        unsigned long total = a.tamano_total();
+        for (unsigned long i = 0; i < total; ++i)
+            r.datos[i] = a.datos[i] * b.datos[i];
+        return r;
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Tensor<T, N>& t) {
@@ -330,49 +288,6 @@ public:
             }
             os << "}";
         }
-        else if constexpr (N == 3) {
-            unsigned long D0 = t.dimensiones[0];
-            unsigned long D1 = t.dimensiones[1];
-            unsigned long D2 = t.dimensiones[2];
-            os << "{\n";
-            for (unsigned long i = 0; i < D0; ++i) {
-                os << "{\n";
-                for (unsigned long j = 0; j < D1; ++j) {
-                    for (unsigned long k = 0; k < D2; ++k) {
-                        unsigned long idx = (i * D1 + j) * D2 + k;
-                        os << t.datos[idx];
-                        if (k + 1 < D2) os << " ";
-                    }
-                    os << "\n";
-                }
-                os << "}\n";
-            }
-            os << "}";
-        }
-        else /* N == 4 */ {
-            unsigned long D0 = t.dimensiones[0];
-            unsigned long D1 = t.dimensiones[1];
-            unsigned long D2 = t.dimensiones[2];
-            unsigned long D3 = t.dimensiones[3];
-            os << "{\n";
-            for (unsigned long i = 0; i < D0; ++i) {
-                os << "{\n";
-                for (unsigned long j = 0; j < D1; ++j) {
-                    os << "{\n";
-                    for (unsigned long k = 0; k < D2; ++k) {
-                        for (unsigned long l = 0; l < D3; ++l) {
-                            unsigned long idx = ((i * D1 + j) * D2 + k) * D3 + l;
-                            os << t.datos[idx];
-                            if (l + 1 < D3) os << " ";
-                        }
-                        os << "\n";
-                    }
-                    os << "}\n";
-                }
-                os << "}\n";
-            }
-            os << "}";
-        }
         return os;
     }
 
@@ -390,75 +305,35 @@ public:
         }
     }
 
+    template<typename Func>
+    Tensor<T, N> apply(Func f) const {
+        Tensor<T, N> result = *this;
+        unsigned long total = tamano_total();
+        for (unsigned long i = 0; i < total; ++i) {
+            result.datos[i] = f(datos[i]);
+        }
+        return result;
+    }
+
+    Tensor<T, N> transpose_2d() const {
+        if constexpr (N != 2) {
+            throw TensorError("transpose_2d only works for 2D tensors");
+        }
+        Tensor<T, N> result(dimensiones[1], dimensiones[0]);
+        for (unsigned long i = 0; i < dimensiones[0]; ++i) {
+            for (unsigned long j = 0; j < dimensiones[1]; ++j) {
+                result(j, i) = (*this)(i, j);
+            }
+        }
+        return result;
+    }
+
 private:
     T* datos;
     unsigned long dimensiones[N];
     unsigned long capacidad;
 };
 
-template <typename T, unsigned long N, size_t... Is>
-Tensor<T, N> construct_from_dims(const unsigned long dims[N],
-                                  std::index_sequence<Is...>) {
-    return Tensor<T, N>(dims[Is]...);
-}
-
-template <typename T, unsigned long N>
-Tensor<T, N> transpose_2d(const Tensor<T, N>& t) {
-    if constexpr (N < 2) {
-        throw TensorError("Cannot transpose 1D tensor: need at least 2 dimensions");
-    }
-    const unsigned long* orig_dims = t.shape();
-    unsigned long new_dims[N];
-    for (unsigned long i = 0; i < N; ++i)
-        new_dims[i] = orig_dims[i];
-
-    if constexpr (N == 2) {
-        std::swap(new_dims[0], new_dims[1]);
-    } else {
-        std::swap(new_dims[N - 2], new_dims[N - 1]);
-    }
-
-    Tensor<T, N> result = construct_from_dims<T, N>(
-        new_dims, std::make_index_sequence<N>{}
-    );
-
-    unsigned long total = t.tamano_total();
-    unsigned long old_strides[N], new_strides[N];
-    t.calcular_strides(orig_dims, old_strides);
-    result.calcular_strides(new_dims, new_strides);
-
-    const T* old_data = t.cbegin();
-    T* new_data = result.begin();
-
-    for (unsigned long lin = 0; lin < total; ++lin) {
-        unsigned long rem = lin;
-        unsigned long idx_old[N];
-        for (unsigned long d = 0; d < N; ++d) {
-            idx_old[d] = rem / old_strides[d];
-            rem %= old_strides[d];
-        }
-        unsigned long idx_new[N];
-        for (unsigned long d = 0; d < N; ++d)
-            idx_new[d] = idx_old[d];
-
-        if constexpr (N == 2) {
-            std::swap(idx_new[0], idx_new[1]);
-        } else {
-            std::swap(idx_new[N - 2], idx_new[N - 1]);
-        }
-
-        unsigned long lin_new = 0;
-        for (unsigned long d = 0; d < N; ++d) {
-            lin_new += idx_new[d] * new_strides[d];
-        }
-        new_data[lin_new] = old_data[lin];
-    }
-    return result;
-}
-
-// ------------------ matrix_product OVERLOADS ------------------
-
-// 2D case: simple matrix multiplication
 template <typename T>
 Tensor<T, 2> matrix_product(const Tensor<T, 2>& A, const Tensor<T, 2>& B) {
     unsigned long* a_dims = A.shape();
@@ -481,34 +356,8 @@ Tensor<T, 2> matrix_product(const Tensor<T, 2>& A, const Tensor<T, 2>& B) {
     return R;
 }
 
-// 3D case: batched matrix multiplication
-template <typename T>
-Tensor<T, 3> matrix_product(const Tensor<T, 3>& A, const Tensor<T, 3>& B) {
-    unsigned long a0 = A.shape()[0], a1 = A.shape()[1], a2 = A.shape()[2];
-    unsigned long b0 = B.shape()[0], b1 = B.shape()[1], b2 = B.shape()[2];
-    // First check inner dims
-    if (a2 != b1) {
-        throw TensorError("Matrix dimensions are incompatible for multiplication");
-    }
-    // Then check batch dims
-    if (a0 != b0) {
-        throw TensorError("Matrix dimensions are compatible for multiplication BUT Batch dimensions do not match");
-    }
-    // Result shape: (batch, M, N) = (a0, a1, b2)
-    Tensor<T, 3> R(a0, a1, b2);
-    for (unsigned long batch = 0; batch < a0; ++batch) {
-        for (unsigned long i = 0; i < a1; ++i) {
-            for (unsigned long j = 0; j < b2; ++j) {
-                T sum = T();
-                for (unsigned long k = 0; k < a2; ++k) {
-                    sum += A(batch, i, k) * B(batch, k, j);
-                }
-                R(batch, i, j) = sum;
-            }
-        }
-    }
-    return R;
-}
+template<typename T>
+using Tensor2 = Tensor<T, 2>;
 
-}
-}
+} // namespace algebra
+} // namespace utec
