@@ -163,19 +163,32 @@ Implementación en C++ de un agente para el juego Pong que utiliza una red neuro
 
 ### 4. Análisis del rendimiento
 
-* **Métricas de ejemplo**:
+## 4. Análisis del rendimiento
 
-  * Iteraciones: 1000 épocas.
-  * Tiempo total de entrenamiento: 2m30s.
-  * Precisión final: 92.5%.
-* **Ventajas/Desventajas**:
+### Métricas de entrenamiento
 
-  * Código ligero y dependencias mínimas.
-  * Sin paralelización, rendimiento limitado.
-* **Mejoras futuras**:
+- **Iteraciones**:
+- **Tiempo total de entrenamiento**:
+- **Precisión final**: 
 
-  * Uso de BLAS para multiplicaciones (Justificación).
-  * Paralelizar entrenamiento por lotes (Justificación).
+### Ventajas y desventajas
+
+**Ventajas:**
+
+- Implementación ligera en C++.
+- Dependencias mínimas (solo STL).
+- Estructura clara y educativa del flujo forward → backward → optimize.
+
+**Desventajas:**
+
+- Sin paralelización (entrenamiento en un solo hilo).
+- Sin soporte de batches.
+- Matriz multiplicada con bucles simples (poco eficiente).
+
+### Mejoras futuras propuestas
+
+- **Uso de BLAS**: Para acelerar las multiplicaciones, se podría integrar bibliotecas como Eigen o OpenBLAS, aprovechando sus rutinas optimizadas en C++.
+- **Paralelización del entrenamiento**: Dividir el dataset en minibatches y aplicar hilos con std::thread permitiría escalar en CPUs multinúcleo, acelerando el entrenamiento.
 
 ---
 
