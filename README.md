@@ -224,7 +224,7 @@ Implementación en C++ de un agente para el juego Pong que utiliza una red neuro
 
 [2] D. E. Rumelhart, G. E. Hinton y R. J. Williams, “Learning representations by back-propagating errors,” *Nature*, vol. 323, pp. 533–536, 1986. [Online]. Disponible: https://www.nature.com/articles/323533a0
 
-[6] D. P. Kingma y J. Ba, “Adam: A method for stochastic optimization,” en *Proceedings of the 3rd International Conference on Learning Representations (ICLR)*, 2015. [Online]. Disponible: https://arxiv.org/abs/1412.6980
+[3] D. P. Kingma y J. Ba, “Adam: A method for stochastic optimization,” en *Proceedings of the 3rd International Conference on Learning Representations (ICLR)*, 2015. [Online]. Disponible: https://arxiv.org/abs/1412.6980
 
 ---
 
