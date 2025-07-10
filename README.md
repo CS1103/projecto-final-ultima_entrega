@@ -144,7 +144,7 @@ Implementación en C++ de un agente para el juego Pong que utiliza una red neuro
 El programa se compila y ejecuta desde CLion o por línea de comandos. No requiere archivos de entrada.
 
 ```bash
-./EP2321
+./pong_ai
 ```
 ### Casos de prueba
 **Test unitario de capa densa (Dense)**
