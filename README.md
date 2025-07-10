@@ -34,6 +34,7 @@ Implementación en C++ de un agente para el juego Pong que utiliza una red neuro
   * Requelmy Limaco Porras – 202410015 (Responsable de investigación teórica, Pruebas y benchmarking)
   * Leonardo Martinez Aquino – 202410148 (Implementación del modelo)
   * Jorge Armando Martínez Palomino - 202310094 (Desarrollo de la arquitectura y desarrollo del código)
+  * Carlos Victor Duamel Dávila Cabezas - 
 ---
 
 ### Requisitos e instalación
