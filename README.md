@@ -4,7 +4,11 @@
 
 ### **Descripción**
 
-> Ejemplo: Implementación de una red neuronal multicapa en C++ para clasificación de dígitos manuscritos.
+> Implementación en C++ de un agente para el juego Pong que utiliza una red neuronal multicapa entrenada desde cero. El proyecto incluye:
+>
+> - Una librería de álgebra de tensores genéricos (Tensor<T, Rank>) con reshape, broadcasting y operaciones element‑wise.  
+> - Capas densas (Dense), función de activación ReLU y función de pérdida MSE, todo implementado sin dependencias de frameworks de deep learning.  
+> - Un entorno simulado (EnvGym) que replica la dinámica básica de Pong y una clase PongAgent que, usando la red entrenada, decide acciones (mover la paleta hacia arriba, abajo o quedarse).  
 
 ### Contenidos
 
