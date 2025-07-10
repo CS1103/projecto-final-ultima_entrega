@@ -1,29 +1,32 @@
-#include "utec/algebra/Tensor.h"
+#pragma once
+#include <numeric>
+#include "Tensor.h"
+#include "layer.h"
 
-namespace utec::nn {
+namespace utec {
+    namespace nn {
 
-template<typename T>
-class MSELoss {
-public:
-    /// Calcula la pérdida media sobre el batch
-    T forward(const Tensor2<T>& pred, const Tensor2<T>& target) {
-        last_pred = pred;
-        last_target = target;
-        auto diff = pred - target;              // [batch,features]
-        auto sq   = diff * diff;                // elemento a elemento
-        T sum = std::accumulate(sq.begin(), sq.end(), T(0));
-        return sum / T(pred.shape()[0]);
-    }
+        template<typename T>
+        class MSELoss {
+        public:
+            T forward(const Tensor2<T>& pred, const Tensor2<T>& target) {
+                last_pred = pred;
+                last_target = target;
+                auto diff = pred - target;
+                auto sq = diff * diff;
+                T sum = std::accumulate(sq.begin(), sq.end(), T(0));
+                return sum / T(pred.shape()[0]);
+            }
 
-    /// Devuelve dL/dPred (mismo tamaño que pred)
-    Tensor2<T> backward() {
-        // gradiente de MSE: 2*(pred - target)/batch_size
-        auto diff = last_pred - last_target;
-        return diff * (T(2) / T(last_pred.shape()[0]));
-    }
+            Tensor2<T> backward() {
+                auto diff = last_pred - last_target;
+                return diff * (T(2) / T(last_pred.shape()[0]));
+            }
 
-private:
-    Tensor2<T> last_pred, last_target;  // caches para backward
-};
+        private:
+            Tensor2<T> last_pred = Tensor2<T>(1, 1);
+            Tensor2<T> last_target = Tensor2<T>(1, 1);
+        };
 
-} // namespace utec::nn
+    } // namespace nn
+} // namespace utec
