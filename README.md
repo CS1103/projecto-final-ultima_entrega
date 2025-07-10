@@ -177,9 +177,9 @@ make
 
 ### Métricas de entrenamiento
 
-- **Iteraciones**:
-- **Tiempo total de entrenamiento**:
-- **Precisión final**: 
+- **Iteraciones**: 1500 epochs  
+- **Tiempo total de entrenamiento**: 0.0156 segundos  
+- **Precisión final**: 100%
 
 ### Ventajas y desventajas
 
