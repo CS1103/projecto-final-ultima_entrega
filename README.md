@@ -170,8 +170,8 @@ Implementación en C++ de un agente para el juego Pong que utiliza una red neuro
   * Precisión final: 92.5%.
 * **Ventajas/Desventajas**:
 
-  * * Código ligero y dependencias mínimas.
-  * – Sin paralelización, rendimiento limitado.
+  * Código ligero y dependencias mínimas.
+  * Sin paralelización, rendimiento limitado.
 * **Mejoras futuras**:
 
   * Uso de BLAS para multiplicaciones (Justificación).
@@ -218,8 +218,6 @@ Implementación en C++ de un agente para el juego Pong que utiliza una red neuro
 
 ### 7. Bibliografía
 
-> *Actualizar con bibliografia utilizada, al menos 4 referencias bibliograficas y usando formato IEEE de referencias bibliograficas.*
-> 
 [1] I. Goodfellow, Y. Bengio y A. Courville, *Deep Learning*, Cambridge, MA: MIT Press, 2016. [Online]. Disponible: https://www.deeplearningbook.org
 
 [2] D. E. Rumelhart, G. E. Hinton y R. J. Williams, “Learning representations by back-propagating errors,” *Nature*, vol. 323, pp. 533–536, 1986. [Online]. Disponible: https://www.nature.com/articles/323533a0
