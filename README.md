@@ -29,15 +29,8 @@ Implementación en C++ de un agente para el juego Pong que utiliza una red neuro
 * **Tema**: Redes Neuronales en AI
 * **Grupo**: `group_3_custom_name`
 * **Integrantes**:
-
-  * Alumno A – 209900001 (Responsable de investigación teórica)
-  * Alumno B – 209900002 (Desarrollo de la arquitectura)
-  * Alumno C – 209900003 (Implementación del modelo)
-  * Requelmy Limaco Porras – 202410015 (Pruebas y benchmarking)
-  * Leonardo Martinez Aquino – 202410148 (Documentación y demo)
-
-> *Nota: Reemplazar nombres y roles reales.*
-
+  * Requelmy Limaco Porras – 202410015 (Responsable de investigación teórica, Pruebas y benchmarking)
+  * Leonardo Martinez Aquino – 202410148 (Desarrollo de la arquitectura, Desarrollo de la arquitectura, Implementación del modelo, Documentación y demo)
 ---
 
 ### Requisitos e instalación
@@ -170,13 +163,17 @@ Se valida con propagación hacia adelante y hacia atrás (forward y backward).
 
 ### 3. Ejecución
 
-> **Demo de ejemplo**: Video/demo alojado en `docs/demo.mp4`.
-> Pasos:
->
-> 1. Preparar datos de entrenamiento (formato CSV).
-> 2. Ejecutar comando de entrenamiento.
-> 3. Evaluar resultados con script de validación.
+#### 🔧 Pasos para ejecutar
 
+1. Clona el repositorio y compila el proyecto:
+
+```bash
+git clone https://github.com/CS1103/projecto-final-ultima_entrega/
+cd proyecto-pong-nn
+mkdir build && cd build
+cmake ..
+make
+```
 ---
 
 ### 4. Análisis del rendimiento
@@ -216,11 +213,8 @@ Se valida con propagación hacia adelante y hacia atrás (forward y backward).
 | ------------------------- | -------- | ------------------------- |
 | Investigación teórica     | Requelmy Limaco Porras (202410015) | Documentar bases teóricas |
 | Diseño de la arquitectura | Leonardo Martinez Aquino (202410148) | UML y esquemas de clases  |
-| Implementación del modelo | Alumno C | Código C++ de la NN       |
-| Pruebas y benchmarking    | Alumno D | Generación de métricas    |
-| Documentación y demo      | Alumno E | Tutorial y video demo     |
-
-> *Actualizar con tareas y nombres reales.*
+| Implementación del modelo | Leonardo Martinez Aquino (202410148) | Código C++ de la NN       |
+| Pruebas y benchmarking    | Requelmy Limaco Porras (202410015 | Generación de métricas    |
 
 ---
 
