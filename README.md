@@ -209,6 +209,7 @@ make
 | Investigación teórica     | Requelmy Limaco Porras (202410015) | Documentar bases teóricas |
 | Diseño de la arquitectura | Leonardo Martinez Aquino (202410148) | UML y esquemas de clases  |
 | Implementación del modelo | Leonardo Martinez Aquino (202410148) | Código C++ de la NN       |
+| Implementación del modelo | Jorge Armnando Martínez Palomino (202310094) | Código C++ de la NN       |
 | Pruebas y benchmarking    | Requelmy Limaco Porras (202410015 | Generación de métricas    |
 
 ---
