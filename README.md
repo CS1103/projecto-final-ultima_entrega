@@ -191,10 +191,24 @@
 
 ### 6. Conclusiones
 
-* **Logros**: Implementar NN desde cero, validar en dataset de ejemplo.
-* **Evaluación**: Calidad y rendimiento adecuados para propósito académico.
-* **Aprendizajes**: Profundización en backpropagation y optimización.
-* **Recomendaciones**: Escalar a datasets más grandes y optimizar memoria.
+- **Logros**  
+  • Se implementó desde cero un sistema de álgebra de tensores genéricos (Tensor<T, Rank>) capaz de reshape, broadcasting y operaciones element‑wise.  
+  • Se desarrolló una red neuronal modular en C++ (NeuralNetwork) con capas densas (Dense), activación ReLU, y función de pérdida MSE.  
+  • Se integró la red en un agente de Pong (PongAgent) y un entorno simulado (EnvGym), validando el pipeline completo de forward, backpropagation y actualización de pesos.  
+
+- **Evaluación**  
+  • El código muestra una calidad adecuada: patrones de diseño claros, gestión de memoria (copy/move) correcta, y un CMakeLists.txt fácil de mantener.  
+  • El rendimiento en CPU es aceptable para redes pequeñas y batches reducidos, aunque presenta cuellos de botella en operaciones de multiplicación de matrices y broadcasting en tensores de mayor tamaño.
+
+- **Aprendizajes** 
+  • Profundización en el algoritmo de retropropagación: caché de activaciones, cálculo de gradientes en Dense::backward y en MSELoss::backward.  
+  • Manejo manual de memoria dinámica en C++ (new/delete) y diseño de constructores copy/move para evitar fugas y dobles liberaciones.  
+  • Comprensión de la importancia de inicialización de pesos, escalado de gradientes y elección de tasa de aprendizaje.
+
+- **Recomendaciones**  
+  • Extender la librería de tensores para soportar paralelismo (OpenMP/CUDA) y tipos de datos mixtos.  
+  • Agregar funcionalidad de persistencia (guardar/cargar pesos) y herramientas de visualización de métricas (p. ej. gráficas de pérdida y precisión).  
+  • Probar el agente en datasets reales (MNIST, CIFAR-10) o conectar con un entorno gráfico para evaluar rendimiento en escenarios más complejos.
 
 ---
 
